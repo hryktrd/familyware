@@ -14,13 +14,12 @@ export class ShoppingList {
     private items: any[];
 
     constructor(public http: Http) {
-        console.log('Hello ShoppingList Provider');
     }
 
     getShoppingList() {
         this.items = [
-            {"name": "バナナ"},
-            {"name": "りんご"},
+            {"name": "バナナ","date": "2016-12-24"},
+            {"name": "りんご","date": "2017-01-04"},
         ]
 
         return this.items;

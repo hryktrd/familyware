@@ -7,9 +7,10 @@
 <ion-content padding>
     <h2>買い物リスト</h2>
     <ion-list>
-        <button ion-item *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
-            {{ item.name }}
-        </button>
+        <ion-item *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
+            <ion-label>{{ item.name }}</ion-label>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="item.date" disabled="true"></ion-datetime>
+        </ion-item>
     </ion-list>
 
     <ion-list>
@@ -17,6 +18,10 @@
         <ion-item>
             <ion-label floating="">買い物</ion-label>
             <ion-input name="shopping" type="text" value="" [(ngModel)]="shopping"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating="">日付</ion-label>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="shoppingDate"></ion-datetime>
         </ion-item>
     </ion-list>
     <button ion-button (click)="addShppping()">追加</button>
