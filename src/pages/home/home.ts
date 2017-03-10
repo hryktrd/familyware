@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
-import {ShoppingList} from "../../providers/shopping-list";
+import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
-    providers: [ShoppingList]
 })
 export class HomePage implements OnInit {
 
@@ -14,7 +13,7 @@ export class HomePage implements OnInit {
     private shopping: string;
     private shoppingDate:string = moment().format('YYYY-MM-DD');
 
-    constructor(public navCtrl: NavController, private shoppingList: ShoppingList) {
+    constructor(public navCtrl: NavController, private shoppingList: ShoppingListService) {
 
     }
 
