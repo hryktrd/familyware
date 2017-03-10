@@ -5,6 +5,7 @@ import {AboutPage} from '../pages/about/about';
 import {ContactPage} from '../pages/contact/contact';
 import {HomePage} from '../pages/home/home';
 import {TabsPage} from '../pages/tabs/tabs';
+import {Contacts} from "../providers/contacts";
 
 @NgModule({
     declarations: [
@@ -25,7 +26,7 @@ import {TabsPage} from '../pages/tabs/tabs';
         HomePage,
         TabsPage
     ],
-    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Contacts]
 })
 export class AppModule {
 }
