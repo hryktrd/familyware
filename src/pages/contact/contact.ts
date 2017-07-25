@@ -5,6 +5,7 @@ import {ContactService} from "../../providers/contact.service";
 import {UserService} from "../../providers/user.service";
 import {UserInfo} from "../../providers/user-info";
 import {MakeAccountPage} from "../single/make-account";
+import {Contact} from "../../dto/Contact";
 
 @Component({
     selector: 'page-contact',
@@ -12,7 +13,7 @@ import {MakeAccountPage} from "../single/make-account";
 })
 export class ContactPage implements OnInit {
 
-    private myContacts: any[];
+    private myContacts: Contact[];
 
     constructor(public navCtrl: NavController, public contacts: ContactService, private userService: UserService, private userInfo: UserInfo) {
 
@@ -25,11 +26,10 @@ export class ContactPage implements OnInit {
     }
 
     ngOnInit() {
-        this.myContacts = this.contacts.getContacts();
+        this.contacts.getContacts().subscribe(contacts => this.myContacts = contacts);
     }
 
     ionViewCanEnter() {
-        console.log(this.userInfo.getName());
         if (this.userInfo.getName() != null) {
             return true;
         } else {

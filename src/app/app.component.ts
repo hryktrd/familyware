@@ -29,7 +29,7 @@ export class MyApp {
             this.userService.getUserInfo(this.userInfo.getUuid()).subscribe(user => {
                 if(user.length != 0) {
                     console.log(user[0]);
-                    this.userInfo.setName(user[0].name)
+                    this.userInfo.setName(user[0].name);
                 }
                 Splashscreen.hide();
             });

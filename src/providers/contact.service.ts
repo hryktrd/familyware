@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
+import {Contact} from "../dto/Contact";
+import {UserInfo} from "./user-info";
 /*
  Generated class for the ContactService provider.
 
@@ -10,24 +12,15 @@ import 'rxjs/add/operator/map';
  */
 @Injectable()
 export class ContactService {
+    private contactUrl = 'http://localhost/api/v1/contact/';
 
-    private contacts: any[];
-
-    constructor(public http: Http) {
+    constructor(public http: Http, public userInfo: UserInfo) {
     }
 
     getContacts(){
-        this.contacts = [
-            {
-                'id': 'hiro',
-                'name': 'Hiroyuki'
-            },
-            {
-                'id': 'tetsu',
-                'name': 'Tetsuya'
-            }
-        ];
-        return this.contacts;
+        return this.http.get(this.contactUrl + this.userInfo.getUuid()).map(res => res.json() as Contact[]);
     }
 
 }
+
+
