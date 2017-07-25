@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>名前を登録してください</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>名前</h2>
+  <ion-input  name="name" type="text" value="" [(ngModel)]="name"></ion-input>
+  <button ion-button (click)="registerName()">登録</button>
+</ion-content>
