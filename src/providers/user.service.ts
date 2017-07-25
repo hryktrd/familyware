@@ -8,7 +8,7 @@ import {UserInfo} from "./user-info";
 @Injectable()
 export class UserService {
 
-    private allUserUrl = 'http://localhost:8080/api/users/';
+    private allUserUrl = 'http://localhost/api/v1/user/';
 
     constructor(public http: Http, private userInfo: UserInfo) {
     }
