@@ -1,4 +1,5 @@
 import {NgModule, ErrorHandler} from '@angular/core';
+import {BrowserModule} from "@angular/platform-browser";
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {MyApp} from './app.component';
 import {AboutPage} from '../pages/about/about';
@@ -10,6 +11,8 @@ import {ShoppingListService} from "../providers/shopping-list.service";
 import {UserService} from "../providers/user.service";
 import {MakeAccountPage} from "../pages/single/make-account";
 import {UserInfo} from "../providers/user-info";
+import {HttpModule} from "@angular/http";
+import {RegisterNamePage} from "../pages/register-name/register-name";
 
 @NgModule({
     declarations: [
@@ -18,9 +21,12 @@ import {UserInfo} from "../providers/user-info";
         ContactPage,
         HomePage,
         TabsPage,
-        MakeAccountPage
+        MakeAccountPage,
+        RegisterNamePage
     ],
     imports: [
+        BrowserModule,
+        HttpModule,
         IonicModule.forRoot(MyApp)
     ],
     bootstrap: [IonicApp],
@@ -30,7 +36,8 @@ import {UserInfo} from "../providers/user-info";
         ContactPage,
         HomePage,
         TabsPage,
-        MakeAccountPage
+        MakeAccountPage,
+        RegisterNamePage
     ],
     providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ShoppingListService, ContactService, UserService, UserInfo]
 })
