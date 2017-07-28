@@ -7,22 +7,27 @@
 <ion-content padding>
     <h2>買い物リスト</h2>
     <ion-list>
-        <ion-item *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
-            <ion-label>{{ item.name }}</ion-label>
-            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="item.date" disabled="true"></ion-datetime>
-        </ion-item>
+        <ng-container *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
+            <button *ngIf="!item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}</button>
+        </ng-container>
     </ion-list>
 
     <ion-list>
         <h3>新規追加</h3>
         <ion-item>
             <ion-label floating="">買い物</ion-label>
-            <ion-input name="shopping" type="text" value="" [(ngModel)]="shopping"></ion-input>
+            <ion-input name="shopping" type="text" value="" [(ngModel)]="task"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating="">日付</ion-label>
             <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="shoppingDate"></ion-datetime>
         </ion-item>
+    </ion-list>
+    <h2>完了済み</h2>
+    <ion-list>
+        <ng-container *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
+            <button *ngIf="item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}</button>
+        </ng-container>
     </ion-list>
     <button ion-button (click)="addShppping()">追加</button>
 </ion-content>
