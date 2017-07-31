@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import {Task} from "../dto/Task";
 import {Observable} from "rxjs/Observable";
 import {Headers} from "@angular/http"
-import {UserInfo} from "./user-info";
 
 /*
  Generated class for the ShoppingListService provider.
@@ -21,7 +20,7 @@ export class ShoppingListService {
     });
 
 
-    constructor(public http: Http, private userInfo: UserInfo) {
+    constructor(public http: Http) {
     }
 
     getShoppingList(): Observable<Task[]> {

@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,10 +9,6 @@ import 'rxjs/add/operator/map';
  */
 @Injectable()
 export class UserInfo {
-
-    constructor(public http: Http) {
-
-    }
 
     private name: string = null;
     private uuid: string = null;

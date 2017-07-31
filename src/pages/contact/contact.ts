@@ -15,7 +15,7 @@ export class ContactPage implements OnInit {
 
     private myContacts: Contact[];
 
-    constructor(public navCtrl: NavController, public contacts: ContactService, private userService: UserService, private userInfo: UserInfo) {
+    constructor(public navCtrl: NavController, public contacts: ContactService, private userInfo: UserInfo) {
 
     }
 

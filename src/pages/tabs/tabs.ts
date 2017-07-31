@@ -1,11 +1,10 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {HomePage} from '../home/home';
 import {AboutPage} from '../about/about';
 import {ContactPage} from '../contact/contact';
-import {Nav, NavController} from "ionic-angular";
+import {NavController} from "ionic-angular";
 import {UserInfo} from "../../providers/user-info";
-import {RegisterNameComponent} from "../../components/register-name/register-name";
 import {RegisterNamePage} from "../register-name/register-name";
 
 @Component({
