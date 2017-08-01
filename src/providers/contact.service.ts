@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 
 import {Contact} from "../dto/Contact";
 import {UserInfo} from "./user-info";
+import {Family} from "../dto/Family";
+import {User} from "../dto/User";
 /*
  Generated class for the ContactService provider.
 
@@ -12,13 +14,17 @@ import {UserInfo} from "./user-info";
  */
 @Injectable()
 export class ContactService {
-    private contactUrl = 'http://localhost/api/v1/contact/';
+    private familyUrl = 'http://localhost/api/v1/family/';
 
     constructor(public http: Http, public userInfo: UserInfo) {
     }
 
-    getContacts(){
-        return this.http.get(this.contactUrl + this.userInfo.getUuid()).map(res => res.json() as Contact[]);
+    getFamilies(){
+        return this.http.get(this.familyUrl + this.userInfo.getUuid()).map(res => res.json() as Family[]);
+    }
+
+    getUserByFamily(id){
+        return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as User[]);
     }
 
 }

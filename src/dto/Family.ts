@@ -1,4 +1,4 @@
-export class Contact {
+export class Family {
     id: number;
     name: string;
 }

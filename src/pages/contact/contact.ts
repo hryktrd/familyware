@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
 import {ContactService} from "../../providers/contact.service";
-import {UserService} from "../../providers/user.service";
 import {UserInfo} from "../../providers/user-info";
-import {MakeAccountPage} from "../single/make-account";
 import {Contact} from "../../dto/Contact";
+import {RegisterNamePage} from "../register-name/register-name";
+import {Family} from "../../dto/Family";
 
 @Component({
     selector: 'page-contact',
@@ -14,6 +14,7 @@ import {Contact} from "../../dto/Contact";
 export class ContactPage implements OnInit {
 
     private myContacts: Contact[];
+    private families: Family[];
 
     constructor(public navCtrl: NavController, public contacts: ContactService, private userInfo: UserInfo) {
 
@@ -26,14 +27,17 @@ export class ContactPage implements OnInit {
     }
 
     ngOnInit() {
-        this.contacts.getContacts().subscribe(contacts => this.myContacts = contacts);
+        this.contacts.getFamilies().subscribe(families => {
+            console.log(families);
+            this.families = families
+        });
     }
 
     ionViewCanEnter() {
         if (this.userInfo.getName() != null) {
             return true;
         } else {
-            this.navCtrl.push(MakeAccountPage);
+            this.navCtrl.push(RegisterNamePage);
         }
     }
 

@@ -8,8 +8,8 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let contact of myContacts">
-      <ion-label floating="">name: {{contact.name}}</ion-label>
+    <ion-item *ngFor="let family of families">
+      <ion-label floating="">name: {{family.name}}</ion-label>
       <ion-input name="contactId" type="text" value="" [(ngModel)]="contactId"></ion-input>
 
     </ion-item>
