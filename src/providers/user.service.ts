@@ -18,12 +18,12 @@ export class UserService {
     }
 
     getUserInfo(uuid: string): Observable<User[]> {
-        return this.http.get(this.allUserUrl + '?uuid=' + uuid).map(res => res.json() as User[]);
+        return this.http.get(this.allUserUrl + uuid).map(res => res.json() as User[]);
     }
 
     registerName(name: string): Observable<User> {
         let requestParam = {'name': name, 'uuid': this.userInfo.getUuid()};
-        return this.http.post(this.allUserUrl, requestParam).map(res => res.json() as User);
+        return this.http.post(this.allUserUrl, JSON.stringify(requestParam)).map(res => res.json() as User);
     }
 
 }

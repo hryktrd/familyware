@@ -10,8 +10,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserInfo {
 
-    private name: string = null;
-    private uuid: string = null;
+    id: number = null;
+    name: string = null;
+    uuid: string = null;
+
+    getId() {
+        return this.id;
+    }
 
     getName() {
         return this.name;
@@ -19,6 +24,10 @@ export class UserInfo {
 
     getUuid() {
         return this.uuid;
+    }
+
+    setId(id) {
+        this.id = id;
     }
 
     setName(name) {

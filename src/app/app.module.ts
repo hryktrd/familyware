@@ -9,7 +9,6 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {ContactService} from "../providers/contact.service";
 import {ShoppingListService} from "../providers/shopping-list.service";
 import {UserService} from "../providers/user.service";
-import {MakeAccountPage} from "../pages/single/make-account";
 import {UserInfo} from "../providers/user-info";
 import {HttpModule} from "@angular/http";
 import {RegisterNamePage} from "../pages/register-name/register-name";
@@ -21,7 +20,6 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
         ContactPage,
         HomePage,
         TabsPage,
-        MakeAccountPage,
         RegisterNamePage
     ],
     imports: [
@@ -36,7 +34,6 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
         ContactPage,
         HomePage,
         TabsPage,
-        MakeAccountPage,
         RegisterNamePage
     ],
     providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ShoppingListService, ContactService, UserService, UserInfo]
