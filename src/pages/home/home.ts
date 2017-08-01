@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 import {Task} from "../../dto/Task";
+import {UserInfo} from "../../providers/user-info";
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
@@ -14,7 +15,9 @@ export class HomePage implements OnInit {
     private task: string;
     private shoppingDate:string = moment().format('YYYY-MM-DD');
 
-    constructor(public navCtrl: NavController, private shoppingListService: ShoppingListService) {
+    private userName: string;
+
+    constructor(public navCtrl: NavController, private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
 
     }
 
