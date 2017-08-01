@@ -3,9 +3,6 @@ import {Component} from '@angular/core';
 import {HomePage} from '../home/home';
 import {AboutPage} from '../about/about';
 import {ContactPage} from '../contact/contact';
-import {NavController} from "ionic-angular";
-import {UserInfo} from "../../providers/user-info";
-import {RegisterNamePage} from "../register-name/register-name";
 
 @Component({
     templateUrl: 'tabs.html'
@@ -18,9 +15,4 @@ export class TabsPage {
     tab2Root: any = AboutPage;
     tab3Root: any = ContactPage;
 
-    constructor(userInfo: UserInfo, public nav: NavController) {
-        if(!userInfo.getName()){
-            nav.push(RegisterNamePage);
-        }
-    }
 }
