@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {UserInfo} from "../../providers/user-info";
 import {TabsPage} from "../tabs/tabs";
+import {UserService} from "../../providers/user.service";
 
 /**
  * Generated class for the RegisterNamePage page.
@@ -18,7 +19,7 @@ export class RegisterNamePage {
 
     private name: string;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private userInfo: UserInfo) {
+    constructor(public navCtrl: NavController, private userInfo: UserInfo, private userService: UserService) {
     }
 
     ionViewDidLoad() {
@@ -26,8 +27,11 @@ export class RegisterNamePage {
     }
 
     registerName() {
-        this.userInfo.setName(this.name);
-        this.navCtrl.push(TabsPage);
+        this.userService.registerName(this.name).subscribe(user => {
+            this.userInfo.setId(user.id);
+            this.userInfo.setName(user.name);
+            this.navCtrl.push(TabsPage);
+        });
     }
 
 
