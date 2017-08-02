@@ -14,11 +14,13 @@ import {User} from "../../dto/User";
 })
 export class ContactPage implements OnInit {
 
-    private myContacts: Contact[];
+    private familyUrl = 'http://localhost/api/v1/family/';
+
     private families: Family[];
     private users: User[];
+    private failyName: string;
 
-    constructor(public navCtrl: NavController, public contacts: ContactService, private userInfo: UserInfo) {
+    constructor(public navCtrl: NavController, public contactService: ContactService, private userInfo: UserInfo) {
 
     }
 
@@ -29,17 +31,28 @@ export class ContactPage implements OnInit {
     }
 
     ngOnInit() {
-        this.contacts.getFamilies().subscribe(families => {
+        this.contactService.getFamilies().subscribe(families => {
             this.families = families
         });
     }
 
     clickFamily(id) {
-        this.contacts.getUserByFamily(id).subscribe(users => {
-            this.users = users
-            console.log(this.users);
-        });
+        if(!this.users || this.users.length === 0) {
+            this.contactService.getUserByFamily(id).subscribe(users => {
+                this.users = users;
+            });
+        } else {
+            this.users = [];
+        }
 
+    }
+
+    addFamily() {
+        if(this.failyName) {
+            this.contactService.addFamily(this.failyName).subscribe(family => {
+                this.families.push(family);
+            });
+        }
     }
 
     ionViewCanEnter() {

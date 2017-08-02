@@ -27,6 +27,12 @@ export class ContactService {
         return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as User[]);
     }
 
+    addFamily(name) {
+        const data = {'name': name };
+        return this.http.post(this.familyUrl, JSON.stringify(data)).map(res => res.json() as Family);
+
+    }
+
 }
 
 
