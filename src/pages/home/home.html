@@ -22,6 +22,7 @@
             <ion-label floating="">日付</ion-label>
             <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="shoppingDate"></ion-datetime>
         </ion-item>
+        <button ion-button (click)="addShppping()">追加</button>
     </ion-list>
     <h2>完了済み</h2>
     <ion-list>
@@ -29,5 +30,4 @@
             <button *ngIf="item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}</button>
         </ng-container>
     </ion-list>
-    <button ion-button (click)="addShppping()">追加</button>
 </ion-content>
