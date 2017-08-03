@@ -5,8 +5,6 @@ import {ContactService} from "../../providers/contact.service";
 import {UserInfo} from "../../providers/user-info";
 import {Contact} from "../../dto/Contact";
 import {RegisterNamePage} from "../register-name/register-name";
-import {AddFamilyPage} from '../add-family/add-family';
-import {AddUserPage} from '../add-user/add-user';
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
 
@@ -62,14 +60,6 @@ export class ContactPage implements OnInit {
                 this.families.push(family);
             });
         }
-    }
-
-    /**
-     * ユーザ追加画面のポップオーバー表示
-     */
-    addUserPopOver() {
-        let popOver = this.popoverCtrl.create(AddUserPage);
-        popOver.present(this.families);
     }
 
     /**
