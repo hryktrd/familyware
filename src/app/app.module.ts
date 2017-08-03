@@ -12,6 +12,8 @@ import {UserService} from "../providers/user.service";
 import {UserInfo} from "../providers/user-info";
 import {HttpModule} from "@angular/http";
 import {RegisterNamePage} from "../pages/register-name/register-name";
+import {AddFamilyPage} from "../pages/add-family/add-family";
+import {AddUserPage} from "../pages/add-user/add-user";
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
         ContactPage,
         HomePage,
         TabsPage,
-        RegisterNamePage
+        RegisterNamePage,
+        AddFamilyPage,
+        AddUserPage
     ],
     imports: [
         BrowserModule,
@@ -34,7 +38,9 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
         ContactPage,
         HomePage,
         TabsPage,
-        RegisterNamePage
+        RegisterNamePage,
+        AddFamilyPage,
+        AddUserPage
     ],
     providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ShoppingListService, ContactService, UserService, UserInfo]
 })

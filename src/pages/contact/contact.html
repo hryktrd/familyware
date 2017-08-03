@@ -7,20 +7,38 @@
 </ion-header>
 
 <ion-content>
+
   <ion-list>
+    <ion-list-header>所属ファミリー一覧</ion-list-header>
     <ng-container *ngFor="let family of families">
       <button ion-item (click)="clickFamily(family.id)">name: {{family.name}}</button>
     </ng-container>
   </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4></ion-col>
+      <ion-col col-4><ion-item><ion-label floating="">追加ファミリー名</ion-label><ion-input [(ngModel)]="familyName"></ion-input></ion-item></ion-col>
+      <ion-col col-4><button ion-button (click)="addFamily()">ファミリー追加</button></ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-list>
+    <ion-list-header>メンバー一覧</ion-list-header>
     <ion-item *ngFor="let user of users">
       <ion-label>name: {{user.name}}</ion-label>
     </ion-item>
   </ion-list>
-  <ion-item>
-    <ion-label floating="">コンタクトID</ion-label>
-    <ion-input name="contactId" type="text" value="" [(ngModel)]="contactId"></ion-input>
-  </ion-item>
 
-  <button ion-button (click)="addContact()">追加</button>
+  <ng-container *ngIf="selectedFamilyId">
+    <ion-item>
+      <ion-label floating="">新規メンバー検索</ion-label>
+      <ion-input (ionChange)="searchUser()" name="searchUserName" type="text" value="" [(ngModel)]="searchUserName"></ion-input>
+    </ion-item>
+    <ion-list>
+      <ng-container *ngFor="let searchUser of searchUsers">
+        <button ion-item (click)="selectUser(searchUser.id)">{{searchUser.name}}</button>
+      </ng-container>
+    </ion-list>
+    <button [disabled]="!selectedUserId" ion-button (click)="addUserToFamily()">追加</button>
+  </ng-container>
 </ion-content>

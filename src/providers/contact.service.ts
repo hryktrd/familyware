@@ -15,6 +15,7 @@ import {User} from "../dto/User";
 @Injectable()
 export class ContactService {
     private familyUrl = 'http://localhost/api/v1/family/';
+    private userNameUrl = 'http://localhost/api/v1/user_name/';
 
     constructor(public http: Http, public userInfo: UserInfo) {
     }
@@ -28,9 +29,13 @@ export class ContactService {
     }
 
     addFamily(name) {
-        const data = {'name': name };
+        const data = {'name': name, 'uuid': this.userInfo.getUuid() };
         return this.http.post(this.familyUrl, JSON.stringify(data)).map(res => res.json() as Family);
 
+    }
+
+    getUserByName(name) {
+        return this.http.get(this.userNameUrl + name).map(res => res.json() as User[]);
     }
 
 }

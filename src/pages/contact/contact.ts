@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {NavController, PopoverController} from 'ionic-angular';
 import {ContactService} from "../../providers/contact.service";
 import {UserInfo} from "../../providers/user-info";
 import {Contact} from "../../dto/Contact";
 import {RegisterNamePage} from "../register-name/register-name";
+import {AddFamilyPage} from '../add-family/add-family';
+import {AddUserPage} from '../add-user/add-user';
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
 
@@ -14,13 +16,15 @@ import {User} from "../../dto/User";
 })
 export class ContactPage implements OnInit {
 
-    private familyUrl = 'http://localhost/api/v1/family/';
-
     private families: Family[];
     private users: User[];
-    private failyName: string;
+    private searchUsers: User[];
+    private familyName: string;
+    private selectedFamilyId: number = null;
+    private selectedUserId: number = null;
+    private searchUserName: string;
 
-    constructor(public navCtrl: NavController, public contactService: ContactService, private userInfo: UserInfo) {
+    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public contactService: ContactService, private userInfo: UserInfo) {
 
     }
 
@@ -40,20 +44,57 @@ export class ContactPage implements OnInit {
         if(!this.users || this.users.length === 0) {
             this.contactService.getUserByFamily(id).subscribe(users => {
                 this.users = users;
+                this.selectedFamilyId = id;
             });
         } else {
             this.users = [];
+            this.selectedFamilyId = null;
         }
 
     }
 
+    /**
+     *  ファミリー追加
+     */
     addFamily() {
-        if(this.failyName) {
-            this.contactService.addFamily(this.failyName).subscribe(family => {
+        if (this.familyName) {
+            this.contactService.addFamily(this.familyName).subscribe(family => {
                 this.families.push(family);
             });
         }
     }
+
+    /**
+     * ユーザ追加画面のポップオーバー表示
+     */
+    addUserPopOver() {
+        let popOver = this.popoverCtrl.create(AddUserPage);
+        popOver.present(this.families);
+    }
+
+    /**
+     * ユーザー選択したIDを保存
+     * @param id
+     */
+    selectUser(id) {
+        this.selectedUserId = id;
+    }
+
+    /**
+     * ユーザ名でユーザ検索
+     * @returns {boolean}
+     */
+    searchUser() {
+        this.contactService.getUserByName(this.searchUserName).subscribe(users => this.searchUsers = users);
+    }
+
+    /**
+     * 選択ユーザーを選択ファミリーに追加
+     */
+    addUserToFamily() {
+
+    }
+
 
     ionViewCanEnter() {
         if (this.userInfo.getName() != null) {
