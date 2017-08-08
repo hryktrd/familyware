@@ -8,6 +8,7 @@ import {RegisterNamePage} from "../register-name/register-name";
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
 import {AlertController} from 'ionic-angular';
+import {UserConfirm} from "../../dto/UserConfirm";
 
 @Component({
     selector: 'page-contact',
@@ -16,7 +17,7 @@ import {AlertController} from 'ionic-angular';
 export class ContactPage implements OnInit {
 
     private families: Family[];
-    private users: User[];
+    private userConfirms: UserConfirm[];
     private searchUsers: User[];
     private familyName: string;
     private selectedFamilyId: number = null;
@@ -40,13 +41,13 @@ export class ContactPage implements OnInit {
     }
 
     clickFamily(id) {
-        if (!this.users || this.users.length === 0) {
-            this.contactService.getUserByFamily(id).subscribe(users => {
-                this.users = users;
+        if (!this.userConfirms || this.userConfirms.length === 0) {
+            this.contactService.getUserByFamily(id).subscribe(userConfirms => {
+                this.userConfirms = userConfirms;
                 this.selectedFamilyId = id;
             });
         } else {
-            this.users = [];
+            this.userConfirms = [];
             this.selectedFamilyId = null;
         }
 
@@ -99,7 +100,7 @@ export class ContactPage implements OnInit {
                     handler: () => {
                         this.contactService.addUserToFamily(uesrId, this.selectedFamilyId).subscribe(
                             users => {
-                                this.users = users;
+                                this.userConfirms = users;
                             },
                             err => {
                                 if(err === 409) {
@@ -116,6 +117,19 @@ export class ContactPage implements OnInit {
             ]
         });
         alert.present();
+    }
+
+    /**
+     * ファミリー追加承認
+     */
+    confirmAddFamily(id) {
+        this.contactService.confirmAddFamily(id).subscribe(
+            res => {
+                this.contactService.getFamilies().subscribe(families => {
+                    this.families = families
+                });
+            }
+        );
     }
 
 

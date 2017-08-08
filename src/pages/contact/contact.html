@@ -11,7 +11,8 @@
   <ion-list>
     <ion-list-header>所属ファミリー一覧</ion-list-header>
     <ng-container *ngFor="let family of families">
-      <button ion-item (click)="clickFamily(family.id)">name: {{family.name}}</button>
+      <button *ngIf="family.confirm==1" ion-item (click)="clickFamily(family.id)">{{family.name}}</button>
+      <button *ngIf="family.confirm==0" ion-item (click)="confirmAddFamily(family.id)">{{family.name}}<span style="color: orange;">（タップして承認）</span></button>
     </ng-container>
   </ion-list>
   <ion-grid>
@@ -25,7 +26,8 @@
   <ion-list>
     <ion-list-header>メンバー一覧</ion-list-header>
     <ion-item *ngFor="let user of users">
-      <ion-label>name: {{user.name}}</ion-label>
+      <ion-label *ngIf="user.confirm==1">name: {{user.name}}</ion-label>
+      <ion-label *ngIf="user.confirm==0">name: {{user.name}}<span style="color: orange;">（未承認）</span></ion-label>
     </ion-item>
   </ion-list>
 

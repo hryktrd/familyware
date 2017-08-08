@@ -6,6 +6,7 @@ import {UserInfo} from "./user-info";
 import {Family} from "../dto/Family";
 import {User} from "../dto/User";
 import {Observable} from "rxjs/Observable";
+import {UserConfirm} from "../dto/UserConfirm";
 /*
  Generated class for the ContactService provider.
 
@@ -25,7 +26,7 @@ export class ContactService {
     }
 
     getUserByFamily(id){
-        return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as User[]);
+        return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as UserConfirm[]);
     }
 
     addFamily(name) {
@@ -37,12 +38,20 @@ export class ContactService {
         return this.http.get(this.userNameUrl + name).map(res => res.json().filter(user => user.uuid !== this.userInfo.uuid) as User[]);
     }
 
-    addUserToFamily(userId, familyID) {
+    addUserToFamily(userId, familyId) {
         const data = {'user_id': userId};
-        return this.http.post(this.familyUrl + familyID, JSON.stringify(data)).map(res => res.json() as User[])
+        return this.http.post(this.familyUrl + familyId, JSON.stringify(data)).map(res => res.json() as User[])
             .catch((error: any) => {
                 return Observable.throw(error.status);
             });
+    }
+
+    confirmAddFamily(familyId) {
+        const data = {'user_id': this.userInfo.id};
+        return this.http.put(this.familyUrl + familyId, JSON.stringify(data)).map(res => {
+            res.status;
+        });
+
     }
 
 }
