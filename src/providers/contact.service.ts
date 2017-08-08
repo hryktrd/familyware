@@ -33,7 +33,7 @@ export class ContactService {
     }
 
     getUserByName(name) {
-        return this.http.get(this.userNameUrl + name).map(res => res.json() as User[]);
+        return this.http.get(this.userNameUrl + name).map(res => res.json().filter(user => user.uuid !== this.userInfo.uuid) as User[]);
     }
 
     addUserToFamily(userId, familyID) {
