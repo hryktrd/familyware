@@ -25,7 +25,7 @@
 
   <ion-list>
     <ion-list-header>メンバー一覧</ion-list-header>
-    <ion-item *ngFor="let user of users">
+    <ion-item *ngFor="let user of userConfirms">
       <ion-label *ngIf="user.confirm==1">name: {{user.name}}</ion-label>
       <ion-label *ngIf="user.confirm==0">name: {{user.name}}<span style="color: orange;">（未承認）</span></ion-label>
     </ion-item>
