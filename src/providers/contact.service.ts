@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import {UserInfo} from "./user-info";
 import {Family} from "../dto/Family";
 import {User} from "../dto/User";
+import {Observable} from "rxjs/Observable";
 /*
  Generated class for the ContactService provider.
 
@@ -38,7 +39,10 @@ export class ContactService {
 
     addUserToFamily(userId, familyID) {
         const data = {'user_id': userId};
-        return this.http.post(this.familyUrl + familyID, JSON.stringify(data)).map(res => res.json() as User[]);
+        return this.http.post(this.familyUrl + familyID, JSON.stringify(data)).map(res => res.json() as User[])
+            .catch((error: any) => {
+                return Observable.throw(error.status);
+            });
     }
 
 }

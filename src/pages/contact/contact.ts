@@ -97,7 +97,20 @@ export class ContactPage implements OnInit {
                 {
                     text: 'OK',
                     handler: () => {
-                        this.contactService.addUserToFamily(uesrId, this.selectedFamilyId).subscribe(users => this.users = users);
+                        this.contactService.addUserToFamily(uesrId, this.selectedFamilyId).subscribe(
+                            users => {
+                                this.users = users;
+                            },
+                            err => {
+                                if(err === 409) {
+                                    let dupAlert = this.alertCtrl.create({
+                                        title: 'そのユーザはすでに追加されています',
+                                        subTitle: '違うユーザーを選択してください。',
+                                        buttons: ['OK']
+                                    });
+                                    dupAlert.present();
+                                }
+                            });
                     }
                 }
             ]
