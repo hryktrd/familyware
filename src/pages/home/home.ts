@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
     private task: string;
     private shoppingDate:string = moment().format('YYYY-MM-DD');
 
-    constructor(public navCtrl: NavController, private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
+    constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
 
     }
 
@@ -24,6 +24,11 @@ export class HomePage implements OnInit {
         });
     }
 
+    /**
+     * 買い物リストのどれかをタップすると未処理だった買い物は終了日がついて処理済みに。
+     * 処理済みだったものをタップすると未処理になる。
+     * @param item
+     */
     itemSelected(item) {
         if(!item.comp_date) {
             item.comp_date = moment().format('YYYY-MM-DD');
@@ -34,6 +39,9 @@ export class HomePage implements OnInit {
         this.shoppingListService.updateShopping(item).subscribe(tasks => this.shoppingLists = tasks);
     }
 
+    /**
+     * 新たに買い物をリストに追加
+     */
     addShppping() {
         let addObj: Task = {"task": this.task, "create_date": this.shoppingDate};
         this.shoppingListService.addShopping(addObj).subscribe(tasks => this.shoppingLists = tasks);

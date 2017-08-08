@@ -30,13 +30,29 @@ export class ShoppingListService {
         }
     }
 
+    /**
+     * UUIDを元にユーザーに紐づくタスクを取得
+     * @returns {Observable<R>}
+     */
     getShoppingList(): Observable<Task[]> {
         return this.http.get(this.taskUrl + this.userInfo.uuid).map(res => res.json() as Task[]);
     }
 
+    /**
+     * 買い物追加
+     * @param item
+     * @returns {Observable<R>}
+     * TODO: ファミリー選択
+     */
     addShopping(item: Task) : Observable<Task[]> {
         return this.http.post(this.taskUrl, JSON.stringify(item), {headers: this.jsonHeaders}).map(res => res.json() as Task[]);
     }
+
+    /**
+     * 買い物情報更新
+     * @param item
+     * @returns {Observable<R>}
+     */
     updateShopping(item: Task) : Observable<Task[]> {
         return this.http.put(this.taskUrl, JSON.stringify(item), {headers: this.jsonHeaders}).map(res => res.json() as Task[]);
     }

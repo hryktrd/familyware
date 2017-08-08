@@ -3,7 +3,6 @@ import {Component, OnInit} from '@angular/core';
 import {NavController, PopoverController} from 'ionic-angular';
 import {ContactService} from "../../providers/contact.service";
 import {UserInfo} from "../../providers/user-info";
-import {Contact} from "../../dto/Contact";
 import {RegisterNamePage} from "../register-name/register-name";
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
@@ -28,18 +27,16 @@ export class ContactPage implements OnInit {
 
     }
 
-    private contactId: string;
-
-    addContact() {
-        console.log(this.contactId);
-    }
-
     ngOnInit() {
         this.contactService.getFamilies().subscribe(families => {
             this.families = families
         });
     }
 
+    /**
+     * ファミリーボタンをクリック
+     * @param id ファミリーID
+     */
     clickFamily(id) {
         if (!this.userConfirms || this.userConfirms.length === 0) {
             this.contactService.getUserByFamily(id).subscribe(userConfirms => {

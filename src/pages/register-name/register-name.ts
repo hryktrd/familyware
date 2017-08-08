@@ -5,10 +5,10 @@ import {TabsPage} from "../tabs/tabs";
 import {UserService} from "../../providers/user.service";
 
 /**
- * Generated class for the RegisterNamePage page.
+ * 名前登録ページ
  *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
+ * UUIDでサーバに問い合わせて未登録だった場合はこの画面が初期表示となり、名前を登録させる
+ * TODO: 同じ名前がいた場合の警告表示
  */
 
 @Component({
@@ -26,6 +26,10 @@ export class RegisterNamePage {
         console.log('ionViewDidLoad RegisterNamePage');
     }
 
+    /**
+     * UUIDと名前を紐付け、ユーザIDを取得する。
+     * 登録後通常のタブページに移動する
+     */
     registerName() {
         this.userService.registerName(this.name).subscribe(user => {
             this.userInfo.setId(user.id);
