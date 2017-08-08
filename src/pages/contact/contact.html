@@ -36,9 +36,8 @@
     </ion-item>
     <ion-list>
       <ng-container *ngFor="let searchUser of searchUsers">
-        <button ion-item (click)="selectUser(searchUser.id)">{{searchUser.name}}</button>
+        <button ion-item (click)="addUserToFamily(searchUser.id, searchUser.name)">{{searchUser.name}}</button>
       </ng-container>
     </ion-list>
-    <button [disabled]="!selectedUserId" ion-button (click)="addUserToFamily()">追加</button>
   </ng-container>
 </ion-content>

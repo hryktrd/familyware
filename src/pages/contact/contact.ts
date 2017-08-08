@@ -7,6 +7,7 @@ import {Contact} from "../../dto/Contact";
 import {RegisterNamePage} from "../register-name/register-name";
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
+import {AlertController} from 'ionic-angular';
 
 @Component({
     selector: 'page-contact',
@@ -22,7 +23,7 @@ export class ContactPage implements OnInit {
     private selectedUserId: number = null;
     private searchUserName: string;
 
-    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, public contactService: ContactService, private userInfo: UserInfo) {
+    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, private alertCtrl: AlertController, public contactService: ContactService, private userInfo: UserInfo) {
 
     }
 
@@ -39,7 +40,7 @@ export class ContactPage implements OnInit {
     }
 
     clickFamily(id) {
-        if(!this.users || this.users.length === 0) {
+        if (!this.users || this.users.length === 0) {
             this.contactService.getUserByFamily(id).subscribe(users => {
                 this.users = users;
                 this.selectedFamilyId = id;
@@ -81,8 +82,27 @@ export class ContactPage implements OnInit {
     /**
      * 選択ユーザーを選択ファミリーに追加
      */
-    addUserToFamily() {
-
+    addUserToFamily(uesrId, name) {
+        let alert = this.alertCtrl.create({
+            title: 'ユーザーを追加します',
+            message: name + ' さんを追加して良いですか？',
+            buttons: [
+                {
+                    text: 'キャンセル',
+                    role: 'cancel',
+                    handler: () => {
+                        // console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'OK',
+                    handler: () => {
+                        this.contactService.addUserToFamily(uesrId, this.selectedFamilyId).subscribe(users => this.users = users);
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
 
