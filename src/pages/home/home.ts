@@ -9,7 +9,7 @@ import {UserInfo} from "../../providers/user-info";
     selector: 'page-home',
     templateUrl: 'home.html',
 })
-export class HomePage implements OnInit {
+export class HomePage implements AfterViewInit{
 
     private shoppingLists: Task[];
     private task: string;
@@ -21,9 +21,9 @@ export class HomePage implements OnInit {
 
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
-            this.shoppingLists = shoppingLists
+            this.shoppingLists = shoppingLists;
         });
     }
 

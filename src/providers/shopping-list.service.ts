@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {Task} from "../dto/Task";
 import {Observable} from "rxjs/Observable";
 import {Headers} from "@angular/http"
+import {UserInfo} from "./user-info";
 
 /*
  Generated class for the ShoppingListService provider.
@@ -20,11 +21,12 @@ export class ShoppingListService {
     });
 
 
-    constructor(public http: Http) {
+    constructor(public http: Http, private userInfo: UserInfo) {
     }
 
     getShoppingList(): Observable<Task[]> {
-        return this.http.get(this.taskUrl).map(res => res.json() as Task[]);
+        console.log(this.taskUrl + 'test-uuid');
+        return this.http.get(this.taskUrl + 'test-uuid').map(res => res.json() as Task[]);
     }
 
     addShopping(item: Task) : Observable<Task[]> {
