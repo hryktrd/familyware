@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-
+import {Component, OnInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
@@ -9,19 +8,17 @@ import {UserInfo} from "../../providers/user-info";
     selector: 'page-home',
     templateUrl: 'home.html',
 })
-export class HomePage implements AfterViewInit{
+export class HomePage implements OnInit {
 
     private shoppingLists: Task[];
     private task: string;
     private shoppingDate:string = moment().format('YYYY-MM-DD');
 
-    private userName: string;
-
     constructor(public navCtrl: NavController, private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
 
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
             this.shoppingLists = shoppingLists;
         });

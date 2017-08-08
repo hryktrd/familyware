@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Device} from 'ionic-native';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Task} from "../dto/Task";
@@ -22,11 +23,15 @@ export class ShoppingListService {
 
 
     constructor(public http: Http, private userInfo: UserInfo) {
+        if (Device.uuid) {
+            this.userInfo.setUuid(Device.uuid);
+        } else {
+            this.userInfo.setUuid('test-uuid');
+        }
     }
 
     getShoppingList(): Observable<Task[]> {
-        console.log(this.taskUrl + 'test-uuid');
-        return this.http.get(this.taskUrl + 'test-uuid').map(res => res.json() as Task[]);
+        return this.http.get(this.taskUrl + this.userInfo.uuid).map(res => res.json() as Task[]);
     }
 
     addShopping(item: Task) : Observable<Task[]> {
