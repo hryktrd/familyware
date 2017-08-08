@@ -42,7 +42,6 @@ export class MyApp {
             if(user.length != 0) {
                 this.userInfo.setName(user[0].name);
                 this.userInfo.setId(user[0].id)
-                console.log(user);
             }else{
                 this.nav.push(RegisterNamePage);
             }
