@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import {Contact} from "../dto/Contact";
 import {UserInfo} from "./user-info";
 import {Family} from "../dto/Family";
 import {User} from "../dto/User";
@@ -31,7 +30,6 @@ export class ContactService {
     addFamily(name) {
         const data = {'name': name, 'uuid': this.userInfo.getUuid() };
         return this.http.post(this.familyUrl, JSON.stringify(data)).map(res => res.json() as Family);
-
     }
 
     getUserByName(name) {
