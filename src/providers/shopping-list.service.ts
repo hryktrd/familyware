@@ -23,8 +23,8 @@ export class ShoppingListService {
     constructor(public http: Http) {
     }
 
-    getShoppingList(): Observable<Task[]> {
-        return this.http.get(this.taskUrl).map(res => res.json() as Task[]);
+    getShoppingList(uuid): Observable<Task[]> {
+        return this.http.get(this.taskUrl + uuid).map(res => res.json() as Task[]);
     }
 
     addShopping(item: Task) : Observable<Task[]> {
