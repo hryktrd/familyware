@@ -7,8 +7,16 @@
 <ion-content padding>
     <h2>買い物リスト</h2>
     <ion-list>
-        <ng-container *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
-            <button *ngIf="!item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}</button>
+        <ng-container *ngFor="let item of shoppingLists">
+            <ion-item-sliding *ngIf="!item.comp_date">
+                <ion-item>
+                    {{item.task}}
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button (click)="itemSelected(item)">済</button>
+                    <button color="danger" ion-button (click)="deleteShpping(item.id)">削除</button>
+                </ion-item-options>
+            </ion-item-sliding>
         </ng-container>
     </ion-list>
 
@@ -27,7 +35,8 @@
     <h2>完了済み</h2>
     <ion-list>
         <ng-container *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
-            <button *ngIf="item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}</button>
+            <button *ngIf="item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}
+            </button>
         </ng-container>
     </ion-list>
 </ion-content>

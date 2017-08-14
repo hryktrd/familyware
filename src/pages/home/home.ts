@@ -4,6 +4,7 @@ import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 import {Task} from "../../dto/Task";
 import {UserInfo} from "../../providers/user-info";
+
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
@@ -12,17 +13,24 @@ export class HomePage implements OnInit {
 
     private shoppingLists: Task[];
     private task: string;
-    private shoppingDate:string = moment().format('YYYY-MM-DD');
+    private shoppingDate: string = moment().format('YYYY-MM-DD');
 
     constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
 
     }
 
     ngOnInit() {
+        this.getShopping();
+    }
+
+    /**
+     * 買い物リストを取得（サービス内でUUIDを取得してサーバに問い合わせ
+     */
+    getShopping() {
         this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
             this.shoppingLists = shoppingLists;
-        });
-    }
+        })
+    };
 
     /**
      * 買い物リストのどれかをタップすると未処理だった買い物は終了日がついて処理済みに。
@@ -30,7 +38,7 @@ export class HomePage implements OnInit {
      * @param item
      */
     itemSelected(item) {
-        if(!item.comp_date) {
+        if (!item.comp_date) {
             item.comp_date = moment().format('YYYY-MM-DD');
         } else {
             item.comp_date = null;
@@ -46,6 +54,14 @@ export class HomePage implements OnInit {
         let addObj: Task = {"task": this.task, "create_date": this.shoppingDate};
         this.shoppingListService.addShopping(addObj).subscribe(tasks => this.shoppingLists = tasks);
         this.task = '';
+    }
+
+    /**
+     * 買い物を削除
+     * @param item
+     */
+    deleteShpping(id) {
+        this.shoppingListService.deleteShopping(id).subscribe(tasks => this.shoppingLists = tasks);
     }
 
 }

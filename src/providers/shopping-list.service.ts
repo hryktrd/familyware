@@ -57,5 +57,11 @@ export class ShoppingListService {
         return this.http.put(this.taskUrl, JSON.stringify(item), {headers: this.jsonHeaders}).map(res => res.json() as Task[]);
     }
 
+    /**
+     * 買い物削除
+     */
+    deleteShopping(id: number) : Observable<Task[]> {
+        return this.http.delete(this.taskUrl + Number(id)).map(res => res.json() as Task[]);
+    }
 
 }
