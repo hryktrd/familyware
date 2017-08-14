@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-
+import {Component, OnInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
@@ -15,18 +14,21 @@ export class HomePage implements OnInit {
     private task: string;
     private shoppingDate:string = moment().format('YYYY-MM-DD');
 
-    private userName: string;
-
-    constructor(public navCtrl: NavController, private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
+    constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
 
     }
 
     ngOnInit() {
         this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
-            this.shoppingLists = shoppingLists
+            this.shoppingLists = shoppingLists;
         });
     }
 
+    /**
+     * 買い物リストのどれかをタップすると未処理だった買い物は終了日がついて処理済みに。
+     * 処理済みだったものをタップすると未処理になる。
+     * @param item
+     */
     itemSelected(item) {
         if(!item.comp_date) {
             item.comp_date = moment().format('YYYY-MM-DD');
@@ -37,6 +39,9 @@ export class HomePage implements OnInit {
         this.shoppingListService.updateShopping(item).subscribe(tasks => this.shoppingLists = tasks);
     }
 
+    /**
+     * 新たに買い物をリストに追加
+     */
     addShppping() {
         let addObj: Task = {"task": this.task, "create_date": this.shoppingDate};
         this.shoppingListService.addShopping(addObj).subscribe(tasks => this.shoppingLists = tasks);

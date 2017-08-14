@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/map';
 
 /*
- Generated class for the UserInfo provider.
-
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular 2 DI.
+ ユーザー情報を保持するクラス
+ TODO: getter setterがわざわざいるのか考える
  */
 @Injectable()
 export class UserInfo {
