@@ -129,6 +129,20 @@ export class ContactPage implements OnInit {
         );
     }
 
+    /**
+     * ファミリー脱退
+     * @returns {boolean}
+     */
+    leaveFamily(id) {
+        this.contactService.leaveFamily(id).subscribe(
+            res => {
+                this.contactService.getFamilies().subscribe(families => {
+                    this.families = families
+                });
+            }
+        );
+    }
+
 
     ionViewCanEnter() {
         if (this.userInfo.getName() != null) {

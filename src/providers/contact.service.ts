@@ -84,6 +84,18 @@ export class ContactService {
 
     }
 
+    /**
+     * ファミリーから脱退
+     * @param familyId
+     * @returns {Observable<R>}
+     */
+    leaveFamily(familyId) {
+        return this.http.delete(this.familyUrl + familyId + '/' + this.userInfo.id).map(res => {
+            res.status;
+        });
+
+    }
+
 }
 
 
