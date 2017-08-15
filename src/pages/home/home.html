@@ -5,7 +5,12 @@
 </ion-header>
 
 <ion-content padding>
-    <h2>買い物リスト</h2>
+    <ion-item>
+        <ion-label>ファミリー選択</ion-label>
+        <ion-select [(ngModel)]="selectedFamilyId" (ionChange)="familySelected()">
+            <ion-option *ngFor="let family of families" [value]="family.id">{{family.name}}</ion-option>
+        </ion-select>
+    </ion-item>
     <ion-list>
         <ng-container *ngFor="let item of shoppingLists">
             <ion-item-sliding *ngIf="!item.comp_date">
@@ -13,7 +18,7 @@
                     {{item.task}}
                 </ion-item>
                 <ion-item-options side="right">
-                    <button ion-button (click)="itemSelected(item)">済</button>
+                    <button ion-button (click)="itemSelected(item)">買い物完了</button>
                     <button color="danger" ion-button (click)="deleteShpping(item.id)">削除</button>
                 </ion-item-options>
             </ion-item-sliding>
@@ -34,9 +39,16 @@
     </ion-list>
     <h2>完了済み</h2>
     <ion-list>
-        <ng-container *ngFor="let item of shoppingLists" (click)="itemSelected(item)">
-            <button *ngIf="item.comp_date" ion-item (click)="itemSelected(item)">{{ item.task }} {{item.comp_date}}
-            </button>
+        <ng-container *ngFor="let item of shoppingLists">
+            <ion-item-sliding *ngIf="item.comp_date">
+                <ion-item>
+                    {{item.task}}
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button (click)="itemSelected(item)">元に戻す</button>
+                    <button color="danger" ion-button (click)="deleteShpping(item.id)">削除</button>
+                </ion-item-options>
+            </ion-item-sliding>
         </ng-container>
     </ion-list>
 </ion-content>

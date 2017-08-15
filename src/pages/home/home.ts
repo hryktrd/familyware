@@ -4,6 +4,8 @@ import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 import {Task} from "../../dto/Task";
 import {UserInfo} from "../../providers/user-info";
+import {ContactService} from "../../providers/contact.service";
+import {Family} from "../../dto/Family";
 
 @Component({
     selector: 'page-home',
@@ -14,13 +16,31 @@ export class HomePage implements OnInit {
     private shoppingLists: Task[];
     private task: string;
     private shoppingDate: string = moment().format('YYYY-MM-DD');
+    private families: Family[];
+    private selectedFamilyId: number;
 
-    constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo) {
+    constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo, private contactService: ContactService) {
 
     }
 
     ngOnInit() {
+        this.getFamilies();
         this.getShopping();
+    }
+
+    familySelected() {
+        console.log(this.selectedFamilyId);
+        this.getShoppingByFamilyId(this.selectedFamilyId);
+    }
+    /**
+     * 所属ファミリー取得
+     */
+    getFamilies() {
+        this.contactService.getFamilies().subscribe(families => {
+            this.families = families;
+            this.selectedFamilyId = this.families[0].id;
+            this.getShoppingByFamilyId(this.selectedFamilyId);
+        });
     }
 
     /**
@@ -28,6 +48,15 @@ export class HomePage implements OnInit {
      */
     getShopping() {
         this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
+            this.shoppingLists = shoppingLists;
+        })
+    };
+
+    /**
+     * 買い物リストを取得（選択中のファミリーIDで問い合わせ）
+     */
+    getShoppingByFamilyId(family_id: number) {
+        this.shoppingListService.getShoppingListByFamilyId(family_id).subscribe(shoppingLists => {
             this.shoppingLists = shoppingLists;
         })
     };
@@ -44,15 +73,15 @@ export class HomePage implements OnInit {
             item.comp_date = null;
         }
 
-        this.shoppingListService.updateShopping(item).subscribe(tasks => this.shoppingLists = tasks);
+        this.shoppingListService.updateShopping(item).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
     }
 
     /**
      * 新たに買い物をリストに追加
      */
     addShppping() {
-        let addObj: Task = {"task": this.task, "create_date": this.shoppingDate};
-        this.shoppingListService.addShopping(addObj).subscribe(tasks => this.shoppingLists = tasks);
+        let addObj: Task = {"task": this.task, "create_date": this.shoppingDate, "group_id": this.selectedFamilyId};
+        this.shoppingListService.addShopping(addObj).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
         this.task = '';
     }
 
@@ -61,7 +90,7 @@ export class HomePage implements OnInit {
      * @param item
      */
     deleteShpping(id) {
-        this.shoppingListService.deleteShopping(id).subscribe(tasks => this.shoppingLists = tasks);
+        this.shoppingListService.deleteShopping(id).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
     }
 
 }
