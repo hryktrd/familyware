@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import {StatusBar, Splashscreen, Device} from 'ionic-native';
+import {StatusBar, Splashscreen, Device, AdMob} from 'ionic-native';
 
 import {TabsPage} from '../pages/tabs/tabs';
 import {UserInfo} from "../providers/user-info";
 import {UserService} from "../providers/user.service";
-import {Nav, NavController, Platform} from "ionic-angular";
+import {Nav, Platform} from "ionic-angular";
 import {RegisterNamePage} from "../pages/register-name/register-name";
 
 
@@ -14,6 +14,7 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
 export class MyApp {
     rootPage = TabsPage;
 
+    admobId: any;
     uuid: string;
 
     @ViewChild(Nav) nav;
@@ -30,6 +31,22 @@ export class MyApp {
             }
 
             this.getUserInfo();
+
+            if(/(android)/i.test(navigator.userAgent)) {
+                this.admobId = {
+                    banner: ' ca-app-pub-0759557937131268/4301493043',
+                    // interstitial: 'ca-app-pub-jjj/kkk'
+                };
+            } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+                this.admobId = {
+                    banner: 'ca-app-pub-0759557937131268/3697846057',
+                    // interstitial: 'ca-app-pub-ppp/zzz'
+                };
+            }
+            AdMob.createBanner({
+                isTesting: true,
+                autoShow: true
+            });
 
         });
     }
