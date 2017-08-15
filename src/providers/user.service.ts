@@ -8,7 +8,7 @@ import {HttpClient} from "../share/http-client";
 @Injectable()
 export class UserService {
 
-    private allUserUrl = 'http://localhost/api/v1/user/';
+    private userUrl = 'http://localhost/api/v1/user/';
 
     constructor(public http: HttpClient, private userInfo: UserInfo) {
     }
@@ -18,7 +18,7 @@ export class UserService {
      * @returns {Observable<R>}
      */
     getAll(): Observable<User[]> {
-        return this.http.get(this.allUserUrl).map(res => res.json() as User[]);
+        return this.http.get(this.userUrl).map(res => res.json() as User[]);
     }
 
     /**
@@ -27,7 +27,7 @@ export class UserService {
      * @returns {Observable<R>}
      */
     getUserInfo(): Observable<User[]> {
-        return this.http.get(this.allUserUrl).map(res => res.json() as User[]);
+        return this.http.get(this.userUrl).map(res => res.json() as User[]);
     }
 
     /**
@@ -37,7 +37,7 @@ export class UserService {
      */
     registerName(name: string): Observable<User> {
         let requestParam = {'name': name, 'uuid': this.userInfo.getUuid()};
-        return this.http.post(this.allUserUrl, JSON.stringify(requestParam)).map(res => res.json() as User);
+        return this.http.post(this.userUrl, JSON.stringify(requestParam)).map(res => res.json() as User);
     }
 
 }
