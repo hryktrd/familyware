@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AlertController, NavController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
@@ -6,12 +6,13 @@ import {Task} from "../../dto/Task";
 import {UserInfo} from "../../providers/user-info";
 import {ContactService} from "../../providers/contact.service";
 import {Family} from "../../dto/Family";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html',
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
 
     private shoppingLists: Task[];
     private task: string;
@@ -19,26 +20,37 @@ export class HomePage implements OnInit {
     private families: Family[];
     private selectedFamilyId: number;
 
+    private interval: number;
+    private timer: Observable<number>;
+    private alive = true;
+
     constructor(private alertCtrl: AlertController, private shoppingListService: ShoppingListService, private userInfo: UserInfo, private contactService: ContactService) {
 
     }
 
     ngOnInit() {
+        this.interval = 10000;
+        this.timer = Observable.timer(0, this.interval);
         this.getFamilies();
-        this.getShopping();
+        this.timer
+            .takeWhile(() => this.alive)
+            .subscribe(() => {
+                this.getShopping();
+            });
     }
 
     familySelected() {
         console.log(this.selectedFamilyId);
         this.getShoppingByFamilyId(this.selectedFamilyId);
     }
+
     /**
      * 所属ファミリー取得
      */
     getFamilies() {
         this.contactService.getFamilies().subscribe(families => {
             this.families = families;
-            if(families.length !== 0) {
+            if (families.length !== 0) {
                 this.selectedFamilyId = this.families[0].id;
                 this.getShoppingByFamilyId(this.selectedFamilyId);
             }
@@ -112,6 +124,10 @@ export class HomePage implements OnInit {
             ]
         });
         alert.present();
+    }
+
+    ngOnDestroy() {
+        this.alive = false;
     }
 
 }
