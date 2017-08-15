@@ -42,7 +42,7 @@
         <ng-container *ngFor="let item of shoppingLists">
             <ion-item-sliding *ngIf="item.comp_date">
                 <ion-item>
-                    {{item.task}}
+                    {{item.task}}（{{item.comp_date}}）
                 </ion-item>
                 <ion-item-options side="right">
                     <button ion-button (click)="itemSelected(item)">元に戻す</button>
