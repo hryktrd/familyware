@@ -45,16 +45,11 @@ export class ContactPage implements OnInit {
      * @param id ファミリーID
      */
     clickFamily(id) {
-        if (!this.userConfirms || this.userConfirms.length === 0) {
-            this.contactService.getUserByFamily(id).subscribe(userConfirms => {
-                this.userConfirms = userConfirms;
-                this.selectedFamilyId = id;
-            });
-        } else {
-            this.userConfirms = [];
-            this.selectedFamilyId = null;
-        }
-
+        this.userConfirms = [];
+        this.contactService.getUserByFamily(id).subscribe(userConfirms => {
+            this.userConfirms = userConfirms;
+            this.selectedFamilyId = id;
+        });
     }
 
     /**
