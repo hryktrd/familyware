@@ -13,7 +13,7 @@
     <ng-container *ngFor="let family of families">
       <ion-item-sliding (click)="clickFamily(family.id)">
         <ion-item>
-          {{family.name}}(<span *ngIf="family.confirm==0" style="color: orange;">未承認</span>)
+          {{family.name}}<span *ngIf="family.confirm==0" style="color: orange;">（スライドして承認）</span>
         </ion-item>
         <ion-item-options side="right">
           <button color="danger" ion-button (click)="leaveFamily(family.id)">脱退</button>
