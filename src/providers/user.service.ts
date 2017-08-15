@@ -16,14 +16,6 @@ export class UserService {
     }
 
     /**
-     * 全ユーザ取得 TODO: 本番では削除
-     * @returns {Observable<R>}
-     */
-    getAll(): Observable<User[]> {
-        return this.http.get(this.userUrl).map(res => res.json() as User[]);
-    }
-
-    /**
      * UUIDを元にユーザー情報取得
      * @param uuid
      * @returns {Observable<R>}
@@ -39,7 +31,10 @@ export class UserService {
      */
     registerName(name: string): Observable<User> {
         let requestParam = {'name': name, 'uuid': this.userInfo.getUuid()};
-        return this.http.post(this.userUrl, JSON.stringify(requestParam)).map(res => res.json() as User);
+        return this.http.post(this.userUrl, JSON.stringify(requestParam)).map(res => res.json() as User)
+            .catch((error: any) => {
+            return Observable.throw(error.status);
+        });
     }
 
 }
