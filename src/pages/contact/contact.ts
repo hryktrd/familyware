@@ -136,13 +136,33 @@ export class ContactPage implements OnInit {
      * @returns {boolean}
      */
     leaveFamily(id) {
-        this.contactService.leaveFamily(id).subscribe(
-            res => {
-                this.contactService.getFamilies().subscribe(families => {
-                    this.families = families
-                });
-            }
-        );
+        let alert = this.alertCtrl.create({
+            title: '脱退',
+            message: 'このファミリーから脱退して良いですか？',
+            buttons: [
+                {
+                    text: 'キャンセル',
+                    role: 'cancel',
+                    handler: () => {
+                        // console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'OK',
+                    handler: () => {
+                        this.contactService.leaveFamily(id).subscribe(
+                            res => {
+                                this.contactService.getFamilies().subscribe(families => {
+                                    this.families = families
+                                });
+                            }
+                        );
+                    }
+                }
+            ]
+        });
+        alert.present();
+
     }
 
 

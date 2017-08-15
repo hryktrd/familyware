@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {AlertController, NavController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 import {Task} from "../../dto/Task";
@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
     private families: Family[];
     private selectedFamilyId: number;
 
-    constructor(private shoppingListService: ShoppingListService, private userInfo: UserInfo, private contactService: ContactService) {
+    constructor(private alertCtrl: AlertController, private shoppingListService: ShoppingListService, private userInfo: UserInfo, private contactService: ContactService) {
 
     }
 
@@ -90,7 +90,26 @@ export class HomePage implements OnInit {
      * @param item
      */
     deleteShpping(id) {
-        this.shoppingListService.deleteShopping(id).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
+        let alert = this.alertCtrl.create({
+            title: '削除',
+            message: 'この買い物を削除して良いですか？',
+            buttons: [
+                {
+                    text: 'キャンセル',
+                    role: 'cancel',
+                    handler: () => {
+                        // console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'OK',
+                    handler: () => {
+                        this.shoppingListService.deleteShopping(id).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
 }
