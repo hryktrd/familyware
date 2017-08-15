@@ -38,8 +38,10 @@ export class HomePage implements OnInit {
     getFamilies() {
         this.contactService.getFamilies().subscribe(families => {
             this.families = families;
-            this.selectedFamilyId = this.families[0].id;
-            this.getShoppingByFamilyId(this.selectedFamilyId);
+            if(families.length !== 0) {
+                this.selectedFamilyId = this.families[0].id;
+                this.getShoppingByFamilyId(this.selectedFamilyId);
+            }
         });
     }
 
