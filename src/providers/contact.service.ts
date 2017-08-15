@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import {UserInfo} from "./user-info";
@@ -7,6 +6,7 @@ import {Family} from "../dto/Family";
 import {User} from "../dto/User";
 import {Observable} from "rxjs/Observable";
 import {UserConfirm} from "../dto/UserConfirm";
+import {HttpClient} from "../share/http-client";
 /*
  Generated class for the ContactService provider.
 
@@ -18,7 +18,7 @@ export class ContactService {
     private familyUrl = 'http://localhost/api/v1/family/';
     private userNameUrl = 'http://localhost/api/v1/user_name/';
 
-    constructor(public http: Http, public userInfo: UserInfo) {
+    constructor(public http: HttpClient, public userInfo: UserInfo) {
     }
 
     /**
@@ -26,7 +26,7 @@ export class ContactService {
      * @returns {Observable<R>}
      */
     getFamilies(){
-        return this.http.get(this.familyUrl + this.userInfo.getUuid()).map(res => res.json() as Family[]);
+        return this.http.get(this.familyUrl).map(res => res.json() as Family[]);
     }
 
     /**

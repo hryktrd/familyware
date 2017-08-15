@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {User} from '../dto/User';
 import {Observable} from "rxjs";
 import {UserInfo} from "./user-info";
+import {HttpClient} from "../share/http-client";
 
 @Injectable()
 export class UserService {
 
     private allUserUrl = 'http://localhost/api/v1/user/';
 
-    constructor(public http: Http, private userInfo: UserInfo) {
+    constructor(public http: HttpClient, private userInfo: UserInfo) {
     }
 
     /**
@@ -26,8 +26,8 @@ export class UserService {
      * @param uuid
      * @returns {Observable<R>}
      */
-    getUserInfo(uuid: string): Observable<User[]> {
-        return this.http.get(this.allUserUrl + uuid).map(res => res.json() as User[]);
+    getUserInfo(): Observable<User[]> {
+        return this.http.get(this.allUserUrl).map(res => res.json() as User[]);
     }
 
     /**

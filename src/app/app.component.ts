@@ -38,7 +38,7 @@ export class MyApp {
      * サーバにユーザ情報問い合わせ
      */
     getUserInfo(){
-        this.userService.getUserInfo(this.userInfo.getUuid()).subscribe(user => {
+        this.userService.getUserInfo().subscribe(user => {
             if(user.length != 0) {
                 this.userInfo.setName(user[0].name);
                 this.userInfo.setId(user[0].id)

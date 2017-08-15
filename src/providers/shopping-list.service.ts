@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Device} from 'ionic-native';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Task} from "../dto/Task";
 import {Observable} from "rxjs/Observable";
-import {Headers} from "@angular/http"
 import {UserInfo} from "./user-info";
+import {HttpClient} from "../share/http-client";
 
 /*
  Generated class for the ShoppingListService provider.
@@ -17,12 +16,8 @@ import {UserInfo} from "./user-info";
 export class ShoppingListService {
 
     private taskUrl = 'http://localhost/api/v1/task/';
-    jsonHeaders = new Headers({
-        'Content-Type': 'application/json'
-    });
 
-
-    constructor(public http: Http, private userInfo: UserInfo) {
+    constructor(public http: HttpClient, private userInfo: UserInfo) {
         if (Device.uuid) {
             this.userInfo.setUuid(Device.uuid);
         } else {
@@ -45,7 +40,7 @@ export class ShoppingListService {
      * TODO: ファミリー選択
      */
     addShopping(item: Task) : Observable<Task[]> {
-        return this.http.post(this.taskUrl, JSON.stringify(item), {headers: this.jsonHeaders}).map(res => res.json() as Task[]);
+        return this.http.post(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]);
     }
 
     /**
@@ -54,7 +49,7 @@ export class ShoppingListService {
      * @returns {Observable<R>}
      */
     updateShopping(item: Task) : Observable<Task[]> {
-        return this.http.put(this.taskUrl, JSON.stringify(item), {headers: this.jsonHeaders}).map(res => res.json() as Task[]);
+        return this.http.put(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]);
     }
 
     /**
