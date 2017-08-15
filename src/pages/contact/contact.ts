@@ -28,6 +28,13 @@ export class ContactPage implements OnInit {
     }
 
     ngOnInit() {
+        this.getFamilies();
+    }
+
+    /**
+     * 所属ファミリー取得
+     */
+    getFamilies() {
         this.contactService.getFamilies().subscribe(families => {
             this.families = families
         });
