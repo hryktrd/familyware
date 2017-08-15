@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {NavController, PopoverController} from 'ionic-angular';
 import {ContactService} from "../../providers/contact.service";
@@ -8,12 +8,13 @@ import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
 import {AlertController} from 'ionic-angular';
 import {UserConfirm} from "../../dto/UserConfirm";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-contact',
     templateUrl: 'contact.html'
 })
-export class ContactPage implements OnInit {
+export class ContactPage implements OnInit, OnDestroy {
 
     private families: Family[];
     private userConfirms: UserConfirm[];
@@ -23,12 +24,24 @@ export class ContactPage implements OnInit {
     private selectedUserId: number = null;
     private searchUserName: string;
 
+    private interval: number;
+    private timer: Observable<number>;
+    private alive = true;
+
     constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, private alertCtrl: AlertController, public contactService: ContactService, private userInfo: UserInfo) {
 
     }
 
     ngOnInit() {
+
+        this.interval = 10000;
+        this.timer = Observable.timer(0, this.interval);
         this.getFamilies();
+        this.timer
+            .takeWhile(() => this.alive)
+            .subscribe(() => {
+                this.getFamilies();
+            });
     }
 
     /**
@@ -172,6 +185,10 @@ export class ContactPage implements OnInit {
         } else {
             this.navCtrl.push(RegisterNamePage);
         }
+    }
+
+    ngOnDestroy() {
+        this.alive = false;
     }
 
 }
