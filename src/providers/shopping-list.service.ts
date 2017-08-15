@@ -5,6 +5,7 @@ import {Task} from "../dto/Task";
 import {Observable} from "rxjs/Observable";
 import {UserInfo} from "./user-info";
 import {HttpClient} from "../share/http-client";
+import {Config} from "./config";
 
 /*
  Generated class for the ShoppingListService provider.
@@ -15,9 +16,10 @@ import {HttpClient} from "../share/http-client";
 @Injectable()
 export class ShoppingListService {
 
-    private taskUrl = 'http://localhost/api/v1/task/';
+    private taskUrl: string;
 
-    constructor(public http: HttpClient, private userInfo: UserInfo) {
+    constructor(public http: HttpClient, private userInfo: UserInfo, private config: Config) {
+        this.taskUrl = this.config.taskUrl;
         if (Device.uuid) {
             this.userInfo.setUuid(Device.uuid);
         } else {

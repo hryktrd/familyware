@@ -7,6 +7,7 @@ import {User} from "../dto/User";
 import {Observable} from "rxjs/Observable";
 import {UserConfirm} from "../dto/UserConfirm";
 import {HttpClient} from "../share/http-client";
+import {Config} from "./config";
 /*
  Generated class for the ContactService provider.
 
@@ -15,10 +16,12 @@ import {HttpClient} from "../share/http-client";
  */
 @Injectable()
 export class ContactService {
-    private familyUrl = 'http://localhost/api/v1/family/';
-    private userNameUrl = 'http://localhost/api/v1/user_name/';
+    private familyUrl: string;
+    private userNameUrl: string;
 
-    constructor(public http: HttpClient, public userInfo: UserInfo) {
+    constructor(public http: HttpClient, public userInfo: UserInfo, private config: Config) {
+        this.familyUrl = this.config.familyUrl;
+        this.userNameUrl = this.config.userNameUrl;
     }
 
     /**

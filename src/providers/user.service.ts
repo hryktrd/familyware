@@ -4,13 +4,15 @@ import {User} from '../dto/User';
 import {Observable} from "rxjs";
 import {UserInfo} from "./user-info";
 import {HttpClient} from "../share/http-client";
+import {Config} from "./config";
 
 @Injectable()
 export class UserService {
 
-    private userUrl = 'http://localhost/api/v1/user/';
+    private userUrl: string;
 
-    constructor(public http: HttpClient, private userInfo: UserInfo) {
+    constructor(public http: HttpClient, private userInfo: UserInfo, private config: Config) {
+        this.userUrl = this.config.userUrl;
     }
 
     /**

@@ -13,6 +13,7 @@ import {UserService} from "../providers/user.service";
 import {UserInfo} from "../providers/user-info";
 import {HttpModule} from "@angular/http";
 import {RegisterNamePage} from "../pages/register-name/register-name";
+import { Config } from '../providers/config';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
         TabsPage,
         RegisterNamePage,
     ],
-    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ShoppingListService, ContactService, UserService, UserInfo, HttpClient]
+    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ShoppingListService, ContactService, UserService, UserInfo, HttpClient,
+    Config]
 })
 export class AppModule {
 }
