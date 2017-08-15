@@ -30,7 +30,16 @@ export class ShoppingListService {
      * @returns {Observable<R>}
      */
     getShoppingList(): Observable<Task[]> {
-        return this.http.get(this.taskUrl + this.userInfo.uuid).map(res => res.json() as Task[]);
+        return this.http.get(this.taskUrl).map(res => res.json() as Task[]);
+    }
+
+    /**
+     * ファミリーIDを元に紐づくタスクを取得
+     * @param family_id
+     * @returns {Observable<Task[]>}
+     */
+    getShoppingListByFamilyId(family_id): Observable<Task[]> {
+        return this.http.get(this.taskUrl + 'family/' + family_id).map(res => res.json() as Task[]);
     }
 
     /**
