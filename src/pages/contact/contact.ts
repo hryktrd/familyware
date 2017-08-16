@@ -1,14 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {NavController, PopoverController} from 'ionic-angular';
 import {ContactService} from "../../providers/contact.service";
-import {UserInfo} from "../../providers/user-info";
-import {RegisterNamePage} from "../register-name/register-name";
 import {Family} from "../../dto/Family";
 import {User} from "../../dto/User";
 import {AlertController} from 'ionic-angular';
 import {UserConfirm} from "../../dto/UserConfirm";
 import {Observable} from "rxjs/Observable";
+import {UserInfo} from "../../providers/user-info";
 
 @Component({
     selector: 'page-contact',
@@ -28,7 +26,7 @@ export class ContactPage implements OnInit, OnDestroy {
     private timer: Observable<number>;
     private alive = true;
 
-    constructor(public navCtrl: NavController, public popoverCtrl: PopoverController, private alertCtrl: AlertController, public contactService: ContactService, private userInfo: UserInfo) {
+    constructor(private alertCtrl: AlertController, public contactService: ContactService, private userInfo: UserInfo) {
 
     }
 
@@ -104,7 +102,6 @@ export class ContactPage implements OnInit, OnDestroy {
                     text: 'キャンセル',
                     role: 'cancel',
                     handler: () => {
-                        // console.log('Cancel clicked');
                     }
                 },
                 {
@@ -157,7 +154,6 @@ export class ContactPage implements OnInit, OnDestroy {
                     text: 'キャンセル',
                     role: 'cancel',
                     handler: () => {
-                        // console.log('Cancel clicked');
                     }
                 },
                 {
@@ -176,15 +172,6 @@ export class ContactPage implements OnInit, OnDestroy {
         });
         alert.present();
 
-    }
-
-
-    ionViewCanEnter() {
-        if (this.userInfo.getName() != null) {
-            return true;
-        } else {
-            this.navCtrl.push(RegisterNamePage);
-        }
     }
 
     ngOnDestroy() {

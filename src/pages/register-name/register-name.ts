@@ -21,10 +21,6 @@ export class RegisterNamePage {
     constructor(private alertCtrl: AlertController, public navCtrl: NavController, private userInfo: UserInfo, private userService: UserService) {
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad RegisterNamePage');
-    }
-
     /**
      * UUIDと名前を紐付け、ユーザIDを取得する。
      * 登録後通常のタブページに移動する

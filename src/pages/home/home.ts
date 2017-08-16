@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AlertController, NavController} from 'ionic-angular';
+import {AlertController} from 'ionic-angular';
 import {ShoppingListService} from "../../providers/shopping-list.service";
 import * as moment from "moment/moment";
 import {Task} from "../../dto/Task";
@@ -40,7 +40,6 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     familySelected() {
-        console.log(this.selectedFamilyId);
         this.getShoppingByFamilyId(this.selectedFamilyId);
     }
 
@@ -112,7 +111,6 @@ export class HomePage implements OnInit, OnDestroy {
                     text: 'キャンセル',
                     role: 'cancel',
                     handler: () => {
-                        // console.log('Cancel clicked');
                     }
                 },
                 {
