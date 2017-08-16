@@ -34,7 +34,6 @@ export class ContactPage implements OnInit, OnDestroy {
 
         this.interval = 10000;
         this.timer = Observable.timer(0, this.interval);
-        this.getFamilies();
         this.timer
             .takeWhile(() => this.alive)
             .subscribe(() => {
