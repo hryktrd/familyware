@@ -59,7 +59,7 @@ export class MyApp {
         this.userService.getUserInfo().subscribe(user => {
             if(user.length != 0) {
                 this.userInfo.setName(user[0].name);
-                this.userInfo.setId(user[0].id)
+                this.userInfo.setId(user[0].id);
                 this.rootPage = TabsPage;
             }else{
                 this.rootPage = RegisterNamePage;
