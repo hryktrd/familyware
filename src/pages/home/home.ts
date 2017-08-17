@@ -17,7 +17,7 @@ export class HomePage implements OnInit, OnDestroy {
     private shoppingLists: Task[];
     private task: string;
     private shoppingDate: string = moment().format('YYYY-MM-DD');
-    private families: Family[];
+    private families: Family[] = [];
     private selectedFamilyId: number;
 
     private interval: number;
@@ -31,11 +31,10 @@ export class HomePage implements OnInit, OnDestroy {
     ngOnInit() {
         this.interval = 10000;
         this.timer = Observable.timer(0, this.interval);
-        this.getFamilies();
         this.timer
             .takeWhile(() => this.alive)
             .subscribe(() => {
-                this.getShopping();
+                this.getFamilies();
             });
     }
 
@@ -48,10 +47,17 @@ export class HomePage implements OnInit, OnDestroy {
      */
     getFamilies() {
         this.contactService.getFamilies().subscribe(families => {
-            this.families = families;
-            if (families.length !== 0) {
+            this.families = [];
+            for ( let family of families) {
+                if(Number(family.confirm) === 1) {
+                    this.families.push(family);
+                }
+            }
+            if (this.families.length !== 0) {
                 this.selectedFamilyId = this.families[0].id;
                 this.getShoppingByFamilyId(this.selectedFamilyId);
+            }else {
+                this.shoppingLists = [];
             }
         });
     }

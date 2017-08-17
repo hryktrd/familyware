@@ -27,15 +27,16 @@
 
     <ion-list>
         <h3>買い物新規追加</h3>
+        <span style="color: red" *ngIf="families.length===0">ファミリーに所属されていません。<br>最初にFamilyタブでファミリーを作成してください。</span>
         <ion-item>
             <ion-label floating="">買い物</ion-label>
-            <ion-input name="shopping" type="text" value="" [(ngModel)]="task"></ion-input>
+            <ion-input name="shopping" type="text" value="" [(ngModel)]="task" [disabled]="families.length===0"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating="">日付</ion-label>
-            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="shoppingDate"></ion-datetime>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="shoppingDate" [disabled]="families.length===0"></ion-datetime>
         </ion-item>
-        <button ion-button (click)="addShppping()">追加</button>
+        <button ion-button (click)="addShppping()" [disabled]="families.length===0">追加</button>
     </ion-list>
     <h2>完了済み</h2>
     <ion-list>
