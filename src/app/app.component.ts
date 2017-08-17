@@ -12,7 +12,8 @@ import {RegisterNamePage} from "../pages/register-name/register-name";
     templateUrl: 'app.html',
 })
 export class MyApp {
-    rootPage = TabsPage;
+    // rootPage = TabsPage;
+    rootPage: any;
 
     admobId: any;
     uuid: string;
@@ -59,8 +60,9 @@ export class MyApp {
             if(user.length != 0) {
                 this.userInfo.setName(user[0].name);
                 this.userInfo.setId(user[0].id)
+                this.rootPage = TabsPage;
             }else{
-                this.nav.push(RegisterNamePage);
+                this.rootPage = RegisterNamePage;
             }
             Splashscreen.hide();
         });
