@@ -14,19 +14,19 @@ import {UserInfo} from "../../providers/user-info";
 })
 export class ContactPage implements OnInit, OnDestroy {
 
-    private families: Family[];
-    private userConfirms: UserConfirm[];
-    private searchUsers: User[];
-    private familyName: string;
-    private selectedFamilyId: number = null;
-    private selectedUserId: number = null;
-    private searchUserName: string;
+    families: Family[];
+    userConfirms: UserConfirm[];
+    searchUsers: User[];
+    familyName: string;
+    selectedFamilyId: number = null;
+    selectedUserId: number = null;
+    searchUserName: string;
 
-    private interval: number;
-    private timer: Observable<number>;
-    private alive = true;
+    interval: number;
+    timer: Observable<number>;
+    alive = true;
 
-    constructor(private alertCtrl: AlertController, public contactService: ContactService, private userInfo: UserInfo) {
+    constructor(public alertCtrl: AlertController, public contactService: ContactService, public userInfo: UserInfo) {
 
     }
 

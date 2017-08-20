@@ -14,17 +14,17 @@ import {Observable} from "rxjs/Observable";
 })
 export class HomePage implements OnInit, OnDestroy {
 
-    private shoppingLists: Task[];
-    private task: string;
-    private shoppingDate: string = moment().format('YYYY-MM-DD');
-    private families: Family[] = [];
-    private selectedFamilyId: number;
+    shoppingLists: Task[];
+    task: string;
+    shoppingDate: string = moment().format('YYYY-MM-DD');
+    families: Family[] = [];
+    selectedFamilyId: number;
 
-    private interval: number;
-    private timer: Observable<number>;
-    private alive = true;
+    interval: number;
+    timer: Observable<number>;
+    alive = true;
 
-    constructor(private alertCtrl: AlertController, private shoppingListService: ShoppingListService, private userInfo: UserInfo, private contactService: ContactService) {
+    constructor(public alertCtrl: AlertController, public shoppingListService: ShoppingListService, public userInfo: UserInfo, public contactService: ContactService) {
 
     }
 

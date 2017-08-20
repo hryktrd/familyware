@@ -35,7 +35,7 @@ export class MyApp {
 
             if(/(android)/i.test(navigator.userAgent)) {
                 this.admobId = {
-                    banner: ' ca-app-pub-0759557937131268/4301493043',
+                    banner: 'ca-app-pub-0759557937131268/4301493043',
                     // interstitial: 'ca-app-pub-jjj/kkk'
                 };
             } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {

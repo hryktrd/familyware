@@ -16,9 +16,9 @@ import {UserService} from "../../providers/user.service";
 })
 export class RegisterNamePage {
 
-    private name: string;
+    public name: string;
 
-    constructor(private alertCtrl: AlertController, public navCtrl: NavController, private userInfo: UserInfo, private userService: UserService) {
+    constructor(public alertCtrl: AlertController, public navCtrl: NavController, public userInfo: UserInfo, public userService: UserService) {
     }
 
     /**
