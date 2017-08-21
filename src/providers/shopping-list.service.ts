@@ -28,30 +28,25 @@ export class ShoppingListService {
     }
 
     /**
-     * UUIDを元にユーザーに紐づくタスクを取得
-     * @returns {Observable<R>}
-     */
-    getShoppingList(): Observable<Task[]> {
-        return this.http.get(this.taskUrl).map(res => res.json() as Task[]);
-    }
-
-    /**
      * ファミリーIDを元に紐づくタスクを取得
      * @param family_id
      * @returns {Observable<Task[]>}
      */
     getShoppingListByFamilyId(family_id): Observable<Task[]> {
-        return this.http.get(this.taskUrl + 'family/' + family_id).map(res => res.json() as Task[]);
+        return this.http.get(this.taskUrl + 'family/' + family_id).map(res => res.json() as Task[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
     /**
      * 買い物追加
      * @param item
      * @returns {Observable<R>}
-     * TODO: ファミリー選択
      */
     addShopping(item: Task) : Observable<Task[]> {
-        return this.http.post(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]);
+        return this.http.post(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
     /**
@@ -60,14 +55,18 @@ export class ShoppingListService {
      * @returns {Observable<R>}
      */
     updateShopping(item: Task) : Observable<Task[]> {
-        return this.http.put(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]);
+        return this.http.put(this.taskUrl, JSON.stringify(item)).map(res => res.json() as Task[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
     /**
      * 買い物削除
      */
     deleteShopping(id: number) : Observable<Task[]> {
-        return this.http.delete(this.taskUrl + Number(id)).map(res => res.json() as Task[]);
+        return this.http.delete(this.taskUrl + Number(id)).map(res => res.json() as Task[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
 }

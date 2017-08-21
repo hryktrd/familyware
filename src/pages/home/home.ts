@@ -46,38 +46,47 @@ export class HomePage implements OnInit, OnDestroy {
      * 所属ファミリー取得
      */
     getFamilies() {
-        this.contactService.getFamilies().subscribe(families => {
-            this.families = [];
-            for ( let family of families) {
-                if(Number(family.confirm) === 1) {
-                    this.families.push(family);
+        this.contactService.getFamilies().subscribe(
+            families => {
+                this.families = [];
+                for (let family of families) {
+                    if (Number(family.confirm) === 1) {
+                        this.families.push(family);
+                    }
                 }
-            }
-            if (this.families.length !== 0) {
-                this.selectedFamilyId = this.families[0].id;
-                this.getShoppingByFamilyId(this.selectedFamilyId);
-            }else {
-                this.shoppingLists = [];
-            }
-        });
+                if (this.families.length !== 0) {
+                    this.selectedFamilyId = this.families[0].id;
+                    this.getShoppingByFamilyId(this.selectedFamilyId);
+                } else {
+                    this.shoppingLists = [];
+                }
+            },
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: '所属ファミリー一覧取得エラー。アプリを終了して再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            });
     }
-
-    /**
-     * 買い物リストを取得（サービス内でUUIDを取得してサーバに問い合わせ
-     */
-    getShopping() {
-        this.shoppingListService.getShoppingList().subscribe(shoppingLists => {
-            this.shoppingLists = shoppingLists;
-        })
-    };
 
     /**
      * 買い物リストを取得（選択中のファミリーIDで問い合わせ）
      */
     getShoppingByFamilyId(family_id: number) {
-        this.shoppingListService.getShoppingListByFamilyId(family_id).subscribe(shoppingLists => {
-            this.shoppingLists = shoppingLists;
-        })
+        this.shoppingListService.getShoppingListByFamilyId(family_id).subscribe(
+            shoppingLists => {
+                this.shoppingLists = shoppingLists;
+            },
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: '買い物リストを取得できません。一度アプリを再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            });
     };
 
     /**
@@ -92,7 +101,16 @@ export class HomePage implements OnInit, OnDestroy {
             item.comp_date = null;
         }
 
-        this.shoppingListService.updateShopping(item).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
+        this.shoppingListService.updateShopping(item).subscribe(
+            () => this.getShoppingByFamilyId(this.selectedFamilyId),
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: '買い物データを更新できません。一度アプリを再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            });
     }
 
     /**
@@ -100,7 +118,16 @@ export class HomePage implements OnInit, OnDestroy {
      */
     addShppping() {
         let addObj: Task = {"task": this.task, "create_date": this.shoppingDate, "group_id": this.selectedFamilyId};
-        this.shoppingListService.addShopping(addObj).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
+        this.shoppingListService.addShopping(addObj).subscribe(
+            () => this.getShoppingByFamilyId(this.selectedFamilyId),
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: '買い物を追加できません。一度アプリを再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            });
         this.task = '';
     }
 
@@ -122,7 +149,16 @@ export class HomePage implements OnInit, OnDestroy {
                 {
                     text: 'OK',
                     handler: () => {
-                        this.shoppingListService.deleteShopping(id).subscribe(() => this.getShoppingByFamilyId(this.selectedFamilyId));
+                        this.shoppingListService.deleteShopping(id).subscribe(
+                            () => this.getShoppingByFamilyId(this.selectedFamilyId),
+                            err => {
+                                let dupAlert = this.alertCtrl.create({
+                                    title: 'エラー: ' + err.status,
+                                    subTitle: '買い物を削除できません。一度アプリを再起動してください。',
+                                    buttons: ['OK']
+                                });
+                                dupAlert.present();
+                            });
                     }
                 }
             ]

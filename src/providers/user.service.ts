@@ -21,7 +21,10 @@ export class UserService {
      * @returns {Observable<R>}
      */
     getUserInfo(): Observable<User[]> {
-        return this.http.get(this.userUrl).map(res => res.json() as User[]);
+        return this.http.get(this.userUrl).map(res => res.json() as User[]).catch((error: any) => {
+                return Observable.throw(error);
+            }
+        );
     }
 
     /**
@@ -33,8 +36,8 @@ export class UserService {
         let requestParam = {'name': name, 'uuid': this.userInfo.getUuid()};
         return this.http.post(this.userUrl, JSON.stringify(requestParam)).map(res => res.json() as User)
             .catch((error: any) => {
-            return Observable.throw(error.status);
-        });
+                return Observable.throw(error);
+            });
     }
 
 }

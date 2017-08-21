@@ -8,6 +8,7 @@ import {Observable} from "rxjs/Observable";
 import {UserConfirm} from "../dto/UserConfirm";
 import {HttpClient} from "../share/http-client";
 import {Config} from "./config";
+
 /*
  Generated class for the ContactService provider.
 
@@ -28,8 +29,10 @@ export class ContactService {
      * UUIDを元に所属ファミリー一覧を取得
      * @returns {Observable<R>}
      */
-    getFamilies(){
-        return this.http.get(this.familyUrl).map(res => res.json() as Family[]);
+    getFamilies() {
+        return this.http.get(this.familyUrl).map(res => res.json() as Family[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
     /**
@@ -37,8 +40,10 @@ export class ContactService {
      * @param id ファミリーID
      * @returns {Observable<R>}
      */
-    getUserByFamily(id){
-        return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as UserConfirm[]);
+    getUserByFamily(id) {
+        return this.http.get(this.familyUrl + id + '/user').map(res => res.json() as UserConfirm[]).catch((error: any) => {
+            return Observable.throw(error);
+        });
     }
 
     /**
@@ -47,8 +52,10 @@ export class ContactService {
      * @returns {Observable<R>}
      */
     addFamily(name) {
-        const data = {'name': name, 'uuid': this.userInfo.getUuid() };
-        return this.http.post(this.familyUrl, JSON.stringify(data)).map(res => res.json() as Family);
+        const data = {'name': name};
+        return this.http.post(this.familyUrl, JSON.stringify(data)).map(res => res.json() as Family).catch((error: any) => {
+            return Observable.throw(error);
+        })
     }
 
     /**
@@ -57,7 +64,11 @@ export class ContactService {
      * @returns {Observable<R>}
      */
     getUserByName(name) {
-        return this.http.get(this.userNameUrl + name).map(res => res.json().filter(user => user.uuid !== this.userInfo.uuid) as User[]);
+        if (name !== '') {
+            return this.http.get(this.userNameUrl + name).map(res => res.json().filter(user => user.uuid !== this.userInfo.uuid) as User[]).catch((error: any) => {
+                return Observable.throw(error);
+            });
+        }
     }
 
     /**
@@ -70,7 +81,7 @@ export class ContactService {
         const data = {'user_id': userId};
         return this.http.post(this.familyUrl + familyId, JSON.stringify(data)).map(res => res.json() as User[])
             .catch((error: any) => {
-                return Observable.throw(error.status);
+                return Observable.throw(error);
             });
     }
 
@@ -83,6 +94,8 @@ export class ContactService {
         const data = {'user_id': this.userInfo.id};
         return this.http.put(this.familyUrl + familyId, JSON.stringify(data)).map(res => {
             res.status;
+        }).catch((error: any) => {
+            return Observable.throw(error);
         });
 
     }
@@ -95,6 +108,8 @@ export class ContactService {
     leaveFamily(familyId) {
         return this.http.delete(this.familyUrl + familyId + '/' + this.userInfo.id).map(res => {
             res.status;
+        }).catch((error: any) => {
+            return Observable.throw(error);
         });
 
     }
