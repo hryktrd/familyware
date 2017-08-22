@@ -45,9 +45,18 @@ export class ContactPage implements OnInit, OnDestroy {
      * 所属ファミリー取得
      */
     getFamilies() {
-        this.contactService.getFamilies().subscribe(families => {
-            this.families = families
-        });
+        this.contactService.getFamilies().subscribe(
+            families => {
+                this.families = families
+            },
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: '所属ファミリー一覧取得エラー。アプリを終了して再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            });
     }
 
     /**
@@ -56,10 +65,20 @@ export class ContactPage implements OnInit, OnDestroy {
      */
     clickFamily(id) {
         this.userConfirms = [];
-        this.contactService.getUserByFamily(id).subscribe(userConfirms => {
-            this.userConfirms = userConfirms;
-            this.selectedFamilyId = id;
-        });
+        this.contactService.getUserByFamily(id).subscribe(
+            userConfirms => {
+                this.userConfirms = userConfirms;
+                this.selectedFamilyId = id;
+            },
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: 'ユーザ一覧取得エラー。アプリを終了して再起動してください。',
+                    buttons: ['OK']
+                });
+                dupAlert.present();
+            }
+        );
     }
 
     /**
@@ -67,9 +86,18 @@ export class ContactPage implements OnInit, OnDestroy {
      */
     addFamily() {
         if (this.familyName) {
-            this.contactService.addFamily(this.familyName).subscribe(family => {
-                this.families.push(family);
-            });
+            this.contactService.addFamily(this.familyName).subscribe(
+                family => {
+                    this.families.push(family);
+                },
+                err => {
+                    let dupAlert = this.alertCtrl.create({
+                        title: 'エラー: ' + err.status,
+                        subTitle: 'ファミリー追加に失敗しました。アプリを終了して再起動してください。',
+                        buttons: ['OK']
+                    });
+                    dupAlert.present();
+                });
         }
     }
 
@@ -86,7 +114,17 @@ export class ContactPage implements OnInit, OnDestroy {
      * @returns {boolean}
      */
     searchUser() {
-        this.contactService.getUserByName(this.searchUserName).subscribe(users => this.searchUsers = users);
+        this.contactService.getUserByName(this.searchUserName).subscribe(
+            users => this.searchUsers = users,
+            err => {
+                    let dupAlert = this.alertCtrl.create({
+                        title: 'エラー: ' + err.status,
+                        subTitle: 'ユーザー検索エラー。アプリを再起動してください',
+                        buttons: ['OK']
+                    });
+                    dupAlert.present();
+            }
+        );
     }
 
     /**
@@ -111,10 +149,17 @@ export class ContactPage implements OnInit, OnDestroy {
                                 this.userConfirms = users;
                             },
                             err => {
-                                if(err === 409) {
+                                if (err.status === 409) {
                                     let dupAlert = this.alertCtrl.create({
                                         title: 'そのユーザはすでに追加されています',
                                         subTitle: '違うユーザーを選択してください。',
+                                        buttons: ['OK']
+                                    });
+                                    dupAlert.present();
+                                }else {
+                                    let dupAlert = this.alertCtrl.create({
+                                        title: 'エラー: ' + err.status,
+                                        subTitle: 'ユーザー追加でエラーが発生しました。アプリを再起動してください。',
                                         buttons: ['OK']
                                     });
                                     dupAlert.present();
@@ -133,9 +178,26 @@ export class ContactPage implements OnInit, OnDestroy {
     confirmAddFamily(id) {
         this.contactService.confirmAddFamily(id).subscribe(
             res => {
-                this.contactService.getFamilies().subscribe(families => {
-                    this.families = families
+                this.contactService.getFamilies().subscribe(
+                    families => {
+                        this.families = families
+                    },
+                    err => {
+                        let dupAlert = this.alertCtrl.create({
+                            title: 'エラー: ' + err.status,
+                            subTitle: '所属ファミリー一覧取得エラー。アプリを終了して再起動してください。',
+                            buttons: ['OK']
+                        });
+                        dupAlert.present();
+                    });
+            },
+            err => {
+                let dupAlert = this.alertCtrl.create({
+                    title: 'エラー: ' + err.status,
+                    subTitle: 'ファミリー追加承認できません。一度アプリを再起動してください。',
+                    buttons: ['OK']
                 });
+                dupAlert.present();
             }
         );
     }
@@ -160,9 +222,26 @@ export class ContactPage implements OnInit, OnDestroy {
                     handler: () => {
                         this.contactService.leaveFamily(id).subscribe(
                             res => {
-                                this.contactService.getFamilies().subscribe(families => {
-                                    this.families = families
+                                this.contactService.getFamilies().subscribe(
+                                    families => {
+                                        this.families = families
+                                    },
+                                    err => {
+                                        let dupAlert = this.alertCtrl.create({
+                                            title: 'エラー: ' + err.status,
+                                            subTitle: '所属ファミリー一覧取得エラー。アプリを終了して再起動してください。',
+                                            buttons: ['OK']
+                                        });
+                                        dupAlert.present();
+                                    });
+                            },
+                            err => {
+                                let dupAlert = this.alertCtrl.create({
+                                    title: 'エラー: ' + err.status,
+                                    subTitle: 'ファミリーから脱退できません。一度アプリを再起動してください。',
+                                    buttons: ['OK']
                                 });
+                                dupAlert.present();
                             }
                         );
                     }

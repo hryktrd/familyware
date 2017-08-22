@@ -33,10 +33,17 @@ export class RegisterNamePage {
                 this.navCtrl.push(TabsPage);
             },
             err => {
-                if (err === 409) {
+                if (err.status === 409) {
                     let dupAlert = this.alertCtrl.create({
                         title: 'そのユーザ名はすでに存在しています',
                         subTitle: '違うユーザー名を指定してください。',
+                        buttons: ['OK']
+                    });
+                    dupAlert.present();
+                } else {
+                    let dupAlert = this.alertCtrl.create({
+                        title: 'エラー: ' + err.status,
+                        subTitle: 'ユーザ登録エラー。アプリを再起動してください',
                         buttons: ['OK']
                     });
                     dupAlert.present();
