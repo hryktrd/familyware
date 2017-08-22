@@ -45,7 +45,7 @@ export class MyApp {
                 };
             }
             AdMob.createBanner({
-                isTesting: true,
+                isTesting: false,
                 autoShow: true
             });
 

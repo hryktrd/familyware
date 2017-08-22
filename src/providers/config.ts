@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 */
 @Injectable()
 export class Config {
-    base_url = 'http://10.0.2.2/api/v1/';
+    base_url = 'http://fware.pontium.org/api/v1/';
     familyUrl = this.base_url + 'family/';
     userNameUrl = this.base_url + 'user_name/';
 
