@@ -3,7 +3,9 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>名前</h2>
-  <ion-input  name="name" type="text" value="" [(ngModel)]="name"></ion-input>
-  <button ion-button (click)="registerName()">登録</button>
+    <form #registerNameForm="ngForm" novalidate>
+        <h2>名前</h2>
+        <ion-input name="name" type="text" value="" [(ngModel)]="name" required></ion-input>
+        <button ion-button (click)="registerName()" [disabled]="registerNameForm.form.invalid">登録</button>
+    </form>
 </ion-content>
