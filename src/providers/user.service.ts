@@ -40,4 +40,23 @@ export class UserService {
             });
     }
 
+    /**
+     * ユーザー名変更
+     * @param {string} name
+     * @returns {Observable<User>}
+     */
+    updateUserName(name: string): Observable<User> {
+        const userInfo = {
+            'uuid': this.userInfo.uuid,
+            'id': this.userInfo.id,
+            'name': name
+        };
+
+        return this.http.put(this.userUrl + this.userInfo.id, JSON.stringify(userInfo)).map(res => res.json() as User)
+            .catch((error: any) => {
+                return Observable.throw(error);
+            });
+
+    }
+
 }

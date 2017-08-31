@@ -1,14 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            About
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <p>FamilyWare(以下 本アプリ）は家族、グループ間でおつかいを共有し、日常生活をちょっと便利にするためのアプリです。</p>
-  <p>本アプリの使用によって発生するいかなる損害についても当方はその責を負いません。各人の責任において、
-    特にファミリー設定のミスによるプライバシー情報の漏えいには気をつけてご利用ください。</p>
+<ion-content>
+    <p>FamilyWare(以下 本アプリ）は家族、グループ間でおつかいを共有し、日常生活をちょっと便利にするためのアプリです。</p>
+    <p>本アプリの使用によって発生するいかなる損害についても当方はその責を負いません。各人の責任において、
+        特にファミリー設定のミスによるプライバシー情報の漏えいには気をつけてご利用ください。</p>
+
+    <hr>
+    <br><br><br><br><br><br>
+    <form #userNameForm="ngForm" novalidate>
+        <h2>ユーザー名変更</h2>
+        <ion-input type="text" name="userName" [(ngModel)]="userName" required></ion-input>
+        <button ion-button (click)="updateUserName()" [disabled]="userNameForm.form.invalid || userName===userInfo.name">
+            変更
+        </button>
+    </form>
 </ion-content>
 <ion-footer>Copyright &copy; 2017 Hiroyuki Terada All Rights Reserved</ion-footer>
