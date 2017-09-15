@@ -28,7 +28,12 @@ export class MyApp {
             if (Device.uuid) {
                 this.userInfo.setUuid(Device.uuid);
             } else {
-                this.userInfo.setUuid('test-uuid');
+                let uuidAlert = this.alertCtrl.create({
+                    title: 'UUIDエラー',
+                    subTitle: '端末情報取得エラー。アプリを終了して再起動してください。',
+                    buttons: ['OK']
+                });
+                uuidAlert.present();
             }
 
             this.getUserInfo();

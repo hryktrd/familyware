@@ -1,17 +1,23 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Device} from 'ionic-native';
+import {AlertController} from 'ionic-angular';
 
 @Injectable()
 export class HttpClient {
 
     private uuid;
 
-    constructor(private http: Http) {
+    constructor(private alertCtrl: AlertController, private http: Http) {
         if (Device.uuid) {
             this.uuid = Device.uuid;
         } else {
-            this.uuid = 'test-uuid';
+            let uuidAlert = this.alertCtrl.create({
+                title: 'UUIDエラー',
+                subTitle: '端末情報取得エラー。アプリを終了して再起動してください。',
+                buttons: ['OK']
+            });
+            uuidAlert.present();
         }
     }
 
